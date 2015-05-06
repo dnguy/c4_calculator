@@ -10,69 +10,84 @@
 var number_index = 0; //var jordan
 var temp_num = '';
 var operator = '';
+var decimal_clicked = false;
 
 function input_digit(typed_number) {
     number_array[number_index] = number_array[number_index] + typed_number;
     $("#inputdisplay").val(number_array[number_index]);
     console.log("number_array : ", number_array);
 }
+function decimal (typed_number) {
+if (decimal_clicked == false) {
+    number_array[number_index] = number_array[number_index] + typed_number;
+    $("#inputdisplay").val(number_array[number_index]);
+    decimal_clicked = true;
+
+}
+}
 
 function addition() {
     number_index = 1;
     operator = '+';
+    decimal_clicked=false;
 }
 function subtraction() {
     number_index = 1;
     operator = '-';
+    decimal_clicked=false;
 }
 function multiply() {
     number_index = 1;
     operator = '*';
+    decimal_clicked=false;
 }
 function divide() {
     number_index = 1;
     operator = '/';
+    decimal_clicked=false;
 }
+
 function calculate() {
     switch (operator) {
     case '+':
-      $("#inputdisplay").val(parseInt(number_array[0]) + parseInt(number_array[1]));
-            number_array[0] = '';
-            number_array[1] = '';
-            number_index = 0;
+      $("#inputdisplay").val(parseFloat(number_array[0]) + parseFloat(number_array[1]));
+            
             
             break;
-            case '-':
-      $("#inputdisplay").val(parseInt(number_array[0]) - parseInt(number_array[1]));
-            number_array[0] = '';
-            number_array[1] = '';
-            number_index = 0;
+    case '-':
+      $("#inputdisplay").val(parseFloat(number_array[0]) - parseFloat(number_array[1]));
+            
 
             break;
-            case '*':
-      $("#inputdisplay").val(parseInt(number_array[0]) * parseInt(number_array[1]));
-            number_array[0] = '';
-            number_array[1] = '';
-            number_index = 0;
+    case '*':
+      $("#inputdisplay").val(parseFloat(number_array[0]) * parseFloat(number_array[1]));
+       
 
             break;
     case '/':
-      $("#inputdisplay").val(parseInt(number_array[0]) / parseInt(number_array[1]));
-            number_array[0] = '';
-            number_array[1] = '';
-            number_index = 0;
+      $("#inputdisplay").val(parseFloat(number_array[0]) / parseFloat(number_array[1]));
+           
 
             break;
         default:
     }
-            
+       clear_data();     
 }
-function clear_data(){
+
+function clear_data(clear_display){
+    if(typeof clear_display=='undefined')
+    {
+        clear_display = false;
+    }
     number_array[0] = '';
     number_array[1] = '';
     number_index = 0;
-    $("#inputdisplay").val(0)
-    
+    if(clear_display ){
+        $("#inputdisplay").val(0)
+    }
+    function clear(){
+        
+    }
 }
 
 
@@ -85,21 +100,24 @@ function clear_data(){
 <button type="button" onclick="input_digit(1)">1</button>
 <button type="button" onclick="input_digit(2)">2</button>
 <button type="button" onclick="input_digit(3)">3</button>
+<button type="button" onclick="addition()">+</button>
 <br>
 <button type="button" onclick="input_digit(4)">4</button>
 <button type="button" onclick="input_digit(5)">5</button>
 <button type="button" onclick="input_digit(6)">6</button>
+<button type="button" onclick="subtraction()">-</button>
 <br>
 <button type="button" onclick="input_digit(7)">7</button>
 <button type="button" onclick="input_digit(8)">8</button>
 <button type="button" onclick="input_digit(9)">9</button>
+<button type="button" onclick="multiply()">*</button>
 <br>
 <button type="button" onclick="input_digit(0)">0</button>
-<div>
-    <button type="button" onclick="addition()">+</button</div>
-    <button type="button" onclick="subtraction()">-</button</div>         <button type="button" onclick="multiply()">*</button</div><button type="button" onclick="divide()">/</button</div>
-    <button type="button" onclick="calculate()">=</button</div>
-    <button type="button" onclick="clear_data()">CE</button</div>
+<button type="button" onclick="calculate()">=</button>
+<button type="button" onclick="decimal('.')">.</button>
+<button type="button" onclick="divide()">/</button>
+<br>
+<button type="button" onclick="clear_data(true)">AC</button>
 </body>
 
 </html>
