@@ -3,6 +3,7 @@
 
 <head>
     <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <script>
@@ -22,10 +23,12 @@ if (decimal_clicked == false) {
     number_array[number_index] = number_array[number_index] + typed_number;
     $("#inputdisplay").val(number_array[number_index]);
     decimal_clicked = true;
-
 }
 }
-
+function sign_inversion(){
+    var result = parseInt(number_array[0]) * -1;
+    $("#inputdisplay").val(result);
+}
 function addition() {
     number_index = 1;
     operator = '+';
@@ -73,6 +76,17 @@ function calculate() {
     }
        clear_data();     
 }
+function clear_array(){
+    if(number_index == 0){
+        number_array[0] = '';
+         $("#inputdisplay").val(number_array[0]);
+    }
+    else if(number_index == 1) {
+        number_array[1] = '';
+         $("#inputdisplay").val(number_array[1]);
+    }
+
+}
 
 function clear_data(clear_display){
     if(typeof clear_display=='undefined')
@@ -82,19 +96,17 @@ function clear_data(clear_display){
     number_array[0] = '';
     number_array[1] = '';
     number_index = 0;
+    decimal_clicked = false;
     if(clear_display ){
         $("#inputdisplay").val(0)
     }
-    function clear(){
-        
-    }
 }
 
-
-    </script>
+</script>
 </head>
 
 <body>
+<div>
 <input id="inputdisplay" placeholder="Ready">
 <br>
 <button type="button" onclick="input_digit(1)">1</button>
@@ -117,7 +129,10 @@ function clear_data(clear_display){
 <button type="button" onclick="decimal('.')">.</button>
 <button type="button" onclick="divide()">/</button>
 <br>
+<button type="button" onclick="sign_inversion()">+/-</button>
 <button type="button" onclick="clear_data(true)">AC</button>
+<button type="button" onclick="clear_array()">Clear</button>
+</div>
 </body>
 
 </html>
