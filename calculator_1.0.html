@@ -12,6 +12,8 @@ var number_index = 0; //var jordan
 var temp_num = '';
 var operator = '';
 var decimal_clicked = false;
+var multi_number = '';
+var answer = 0;
 
 function input_digit(typed_number) {
     number_array[number_index] = number_array[number_index] + typed_number;
@@ -30,21 +32,52 @@ function sign_inversion(){
     $("#inputdisplay").val(result);
 }
 function addition() {
+    if (number_array[0] != '' && number_array[1] != ''){
+       calculate();
+       $('#inputdisplay').val(answer);
+       number_array[0] = '' + answer;
+       number_array[1] = '';
+
+    }
     number_index = 1;
     operator = '+';
     decimal_clicked=false;
+    
+
 }
 function subtraction() {
+    if (number_array[0] != '' && number_array[1] != ''){
+       calculate();
+       $('#inputdisplay').val(answer);
+       number_array[0] = '' + answer;
+       number_array[1] = '';
+    }
     number_index = 1;
     operator = '-';
     decimal_clicked=false;
+    
 }
 function multiply() {
+    if (number_array[0] != '' && number_array[1] != ''){
+       calculate();
+       $('#inputdisplay').val(answer);
+       number_array[0] = '' + answer;
+       number_array[1] = '';
+
+    }
     number_index = 1;
     operator = '*';
     decimal_clicked=false;
+    
 }
 function divide() {
+    if (number_array[0] != '' && number_array[1] != ''){
+       calculate();
+       $('#inputdisplay').val(answer);
+       number_array[0] = '' + answer;
+       number_array[1] = '';
+
+    }
     number_index = 1;
     operator = '/';
     decimal_clicked=false;
@@ -53,27 +86,22 @@ function divide() {
 function calculate() {
     switch (operator) {
     case '+':
-      $("#inputdisplay").val(parseFloat(number_array[0]) + parseFloat(number_array[1]));
-            
-            
+     answer = parseFloat(number_array[0]) + parseFloat(number_array[1])
+             
             break;
     case '-':
-      $("#inputdisplay").val(parseFloat(number_array[0]) - parseFloat(number_array[1]));
-            
-
+      answer = parseFloat(number_array[0]) - parseFloat(number_array[1])
             break;
     case '*':
-      $("#inputdisplay").val(parseFloat(number_array[0]) * parseFloat(number_array[1]));
-       
-
+      answer = parseFloat(number_array[0]) * parseFloat(number_array[1])
             break;
     case '/':
-      $("#inputdisplay").val(parseFloat(number_array[0]) / parseFloat(number_array[1]));
-           
-
+      answer = parseFloat(number_array[0]) / parseFloat(number_array[1])
             break;
         default:
     }
+        $("#inputdisplay").val(answer);
+        return answer;
        clear_data();     
 }
 function clear_array(){
@@ -97,6 +125,7 @@ function clear_data(clear_display){
     number_array[1] = '';
     number_index = 0;
     decimal_clicked = false;
+    answer = 0;
     if(clear_display ){
         $("#inputdisplay").val(0)
     }
