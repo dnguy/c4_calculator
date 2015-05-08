@@ -101,7 +101,30 @@
         did_calculate = false;
 
     }
+    function sign_inversion(){
+        if(number_index==0){
+            if(number_array[0].indexOf('-') == 0){
+            number_array[0] = number_array[0].substring(1);
 
+            }
+            else {
+            number_array[0]= '-' + number_array[0];
+        }
+            
+        $('#inputdisplay').val(number_array[0])
+        }
+        else{
+        if(number_array[1].indexOf('-') == 0){
+            number_array[1] = number_array[1].substring(1);
+
+        }
+        else {
+            number_array[1]= '-' + number_array[1];
+        }
+        $('#inputdisplay').val(number_array[1])
+    }
+
+    }
     function equalPressed() {
 
         switch (operator) {
