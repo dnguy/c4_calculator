@@ -1,14 +1,15 @@
 input#inputdisplay {
-  width: 280px;
-  height: 41px;
-  margin: 4% 9%;
+  width: 277px;
+  height: 54px;
+  margin: 8% 9%;
   font-size: 25px;
   box-shadow: 1px 3px 3px black;
+  border-radius: 10px;
 }
 button {
   width: 60px;
   height: 60px;
-  margin-bottom: 4%;
+  margin-bottom: 6%;
   margin-left: 5%;
   box-shadow: 0px 5px 4px black;
   background: orange;
@@ -18,7 +19,9 @@ button:focus {
 	outline:0;
 }
 div {
-	width: 350px;
-	border: 1px solid black;
+	width: 356px;
+  height: 544px;
+	border: 6px solid black;
 	background:rgb(0, 230, 255);
+  border-radius: 10px;
 }

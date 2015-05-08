@@ -33,19 +33,14 @@
         }
     }
 
-    function sign_inversion() {
-        var result = parseInt(number_array[0]) * -1;
-        $("#inputdisplay").val(result);
-    }
-
     function addition() {
         if (number_array[0] == '' && number_array[1] == '') {
             return;
         }
-        if(number_array[0] != '' && number_array[1] != ''){
-        var result = calculate();
-        number_array[0] = '' + result;
-        number_array[1] = '';
+        if (number_array[0] != '' && number_array[1] != '') {
+            var result = calculate();
+            number_array[0] = '' + result;
+            number_array[1] = '';
         }
         number_index = 1;
         operator = '+';
@@ -59,17 +54,17 @@
         if (number_array[0] == '' && number_array[1] == '') {
             return;
         }
-        
-        if(number_array[0] != '' && number_array[1] != ''){
-        var result = calculate();
-        number_array[0] = '' + result;
-        number_array[1] = '';
+
+        if (number_array[0] != '' && number_array[1] != '') {
+            var result = calculate();
+            number_array[0] = '' + result;
+            number_array[1] = '';
         }
         number_index = 1;
         operator = '-'
         decimal_clicked = false;
         did_calculate = false;
-        
+
 
     }
 
@@ -77,11 +72,11 @@
         if (number_array[0] == '' && number_array[1] == '') {
             return;
         }
-        
-        if(number_array[0] != '' && number_array[1] != ''){
-        var result = calculate();
-        number_array[0] = '' + result;
-        number_array[1] = '';
+
+        if (number_array[0] != '' && number_array[1] != '') {
+            var result = calculate();
+            number_array[0] = '' + result;
+            number_array[1] = '';
         }
         number_index = 1;
         operator = '*';
@@ -94,11 +89,11 @@
         if (number_array[0] == '' && number_array[1] == '') {
             return;
         }
-        
-        if(number_array[0] != '' && number_array[1] != ''){
-        var result = calculate();
-        number_array[0] = '' + result;
-        number_array[1] = '';
+
+        if (number_array[0] != '' && number_array[1] != '') {
+            var result = calculate();
+            number_array[0] = '' + result;
+            number_array[1] = '';
         }
         number_index = 1;
         operator = '/';
@@ -135,7 +130,7 @@
 
 
             case '-':
-            //the last thing I pressed was =
+                //the last thing I pressed was =
                 if (did_calculate) {
                     //second value is empty
                     if (number_array[1] == '') {
@@ -155,7 +150,7 @@
                 calculate();
                 break;
             case '*':
-            //the last thing I pressed was =
+                //the last thing I pressed was =
                 if (did_calculate) {
                     //second value is empty
                     if (number_array[1] == '') {
@@ -174,7 +169,7 @@
                 calculate();
                 break;
             case '/':
-             //the last thing I pressed was =
+                //the last thing I pressed was =
                 if (did_calculate) {
                     //second value is empty
                     if (number_array[1] == '') {
@@ -194,13 +189,14 @@
                 break;
             default:
         }
+        
     }
 
     function calculate() {
         if (number_array[0] == '' && number_array[1] == '') {
             return;
         }
-    
+
         var x = parseFloat(number_array[0]);
         var y = parseFloat(number_array[1]);
         if (isNaN(x)) {
@@ -209,7 +205,7 @@
         if (isNaN(y)) {
             y = 0;
         }
-        console.log(typeof x , typeof y)
+        console.log(typeof x, typeof y)
         switch (operator) {
             case '+':
                 answer = x + y;
@@ -230,9 +226,8 @@
 
         //update the display
         console.log(answer)
-        $("#inputdisplay").val(answer);
         did_calculate = true;
-
+        $("#inputdisplay").val(answer);
         return answer;
 
 
