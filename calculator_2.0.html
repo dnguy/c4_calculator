@@ -9,13 +9,14 @@
     var number_array = ['', ''];
     var calculate_array = ['',''];
     numberString = '';
-    var number_index = 0; //var jordan
+    var number_index = 0;
     var temp_num = '';
     var operator = '';
     var decimal_clicked = false;
     var multi_number = '';
     var answer = 0;
     var did_calculate = false;
+    var operator_clicked=false;
 
     function input_digit(typed_number) {
         if (did_calculate) {
@@ -23,241 +24,228 @@
             did_calculate = false;
         }
         //numberString = numberString + typed_number;
-        number_array[number_index] = number_array[number_index] + typed_number;
-        $("#inputdisplay").val(number_array[number_index]);
-        console.log("number_array : ", number_array);
+        calculate_array[number_index] = calculate_array[number_index] + typed_number;
+        update_display();
+        console.log("calculate_array : ", calculate_array);
 
+    }
+    function update_display(){
+        $("#inputdisplay").val(calculate_array.join(''));
     }
 
     function decimal(typed_number) {
         if (decimal_clicked == false) {
-            number_array[number_index] = number_array[number_index] + typed_number;
-            $("#inputdisplay").val(number_array[number_index]);
+            calculate_array[number_index] = calculate_array[number_index] + typed_number;
+            $("#inputdisplay").val(calculate_array[number_index]);
             decimal_clicked = true;
         }
     }
 
     function addition() {
-        if (number_array[0] == '' && number_array[1] == '') {
+        if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
-
-        if (number_array[0] != '' && number_array[1] != '') {
-            var result = calculate();
-            number_array[0] = '' + result;
-            number_array[1] = '';
-        }
         operator = '+';
-        number_index = 1;
+        number_index += 1;
+        calculate_array[number_index] = operator;
+        number_index += 1;
+        calculate_array[number_index] = '';
         decimal_clicked = false;
         did_calculate = false;
+        update_display();
 
 
     }
 
     function subtraction() {
-        if (number_array[0] == '' && number_array[1] == '') {
+        if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
-        if (number_array[0] != '' && number_array[1] != '') {
-            var result = calculate();
-            number_array[0] = '' + result;
-            number_array[1] = '';
-        }
-
-        number_index = 1;
-        operator = '-'
+    
+       operator = '-';
+        number_index += 1;
+        calculate_array[number_index] = operator;
+        number_index += 1;
+        calculate_array[number_index] = '';
         decimal_clicked = false;
         did_calculate = false;
-
-
+        update_display();
     }
 
     function multiply() {
-        if (number_array[0] == '' && number_array[1] == '') {
+        if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
 
-        if (number_array[0] != '' && number_array[1] != '') {
-            var result = calculate();
-            number_array[0] = '' + result;
-            number_array[1] = '';
-        }
-        number_index = 1;
         operator = '*';
+        number_index += 1;
+        calculate_array[number_index] = operator;
+        number_index += 1;
+        calculate_array[number_index] = '';
         decimal_clicked = false;
         did_calculate = false;
-
+        update_display();
     }
 
     function divide() {
-        if (number_array[0] == '' && number_array[1] == '') {
+        if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
 
-        if (number_array[0] != '' && number_array[1] != '') {
-            var result = calculate();
-            number_array[0] = '' + result;
-            number_array[1] = '';
-        }
-        number_index = 1;
         operator = '/';
+        number_index += 1;
+        calculate_array[number_index] = operator;
+        number_index += 1;
+        calculate_array[number_index] = '';
         decimal_clicked = false;
         did_calculate = false;
-
-    }
-
-    function sign_inversion() {
-        //     if(number_index==0){
-        //     if($('#inputdisplay').val().indexOf('-') == 0){
-        //         $('#inputdisplay').val($('#inputdisplay').val().substring(1));
-        //     }
-        //     else {
-        //         $('#inputdisplay').val('-'+$('#inputdisplay').val())
-
-        //     }
-        // }
-
-        if (number_index == 0) {
-            if (number_array[0].indexOf('-') == 0) {
-                number_array[0] = number_array[0].substring(1);
-
-            } else {
-                number_array[0] = '-' + number_array[0];
-            }
-
-            $('#inputdisplay').val(number_array[0])
-        } else {
-            if (number_array[1].indexOf('-') == 0) {
-                number_array[1] = number_array[1].substring(1);
-
-            } else {
-                number_array[1] = '-' + number_array[1];
-            }
-            $('#inputdisplay').val(number_array[1])
-        }
-
+        update_display();
     }
 
     function equalPressed() {
-
-        switch (operator) {
-            case '+':
-
-                //the last thing I pressed was =
-                if (did_calculate) {
-                    //second value is empty
-                    if (number_array[1] == '') {
-                        //default double the first value
-                        number_array[1] = number_array[0];
-                    } else {
-                        //set first index to total of both values
-                        number_array[0] = parseFloat(number_array[0]) + parseFloat(number_array[1]);
-                    }
-                } else {
-                    //last thing I pressed wasnt =
-                    if (number_array[1] == '') {
-                        number_array[1] = number_array[0];
-                    }
-                }
-
+        for (var i = 0; i < calculate_array.length; i++) {
+            if (calculate_array[i] == '*' || calculate_array[i] == '/') {
+                
+                operator = calculate_array[i];
+                number_array[0] = parseFloat(calculate_array[i - 1]);
+                number_array[1] = parseFloat(calculate_array[i + 1]);
                 calculate();
-
-                break;
-
-
-            case '-':
-                //the last thing I pressed was =
-                if (did_calculate) {
-                    //second value is empty
-                    if (number_array[1] == '') {
-                        //default double the first value
-                        number_array[1] = number_array[0];
-                    } else {
-                        //set first index to total of both values
-                        number_array[0] = parseFloat(number_array[0]) - parseFloat(number_array[1]);
-                    }
-                } else {
-                    //last thing I pressed wasnt =
-                    if (number_array[1] == '') {
-                        number_array[1] = number_array[0];
-                    }
-                }
-
-                calculate();
-                break;
-            case '*':
-                //the last thing I pressed was =
-                if (did_calculate) {
-                    //second value is empty
-                    if (number_array[1] == '') {
-                        //default double the first value
-                        number_array[1] = number_array[0];
-                    } else {
-                        //set first index to total of both values
-                        number_array[0] = parseFloat(number_array[0]) * parseFloat(number_array[1]);
-                    }
-                } else {
-                    //last thing I pressed wasnt =
-                    if (number_array[1] == '') {
-                        number_array[1] = number_array[0];
-                    }
-                }
-                calculate();
-                break;
-            case '/':
-                //the last thing I pressed was =
-                if (did_calculate) {
-                    //second value is empty
-                    if (number_array[1] == '') {
-                        //default double the first value
-                        number_array[1] = number_array[0];
-                    } else {
-                        //set first index to total of both values
-                        number_array[0] = parseFloat(number_array[0]) / parseFloat(number_array[1]);
-                    }
-                } else {
-                    //last thing I pressed wasnt =
-                    if (number_array[1] == '') {
-                        number_array[1] = number_array[0];
-                    }
-                }
-                calculate();
-                break;
-            default:
+                calculate_array[i - 1] = answer;
+                console.log(answer);
+                calculate_array.splice(i, 2);
+                i = 0;
+            
+            }  
         }
-        $("#inputdisplay").val(answer);
+            for (var i = 0; i < calculate_array.length; i++) {
+                if (calculate_array[i] == '+' || calculate_array[i] == '-') {
 
+                operator = calculate_array[i];
+                number_array[0] = parseFloat(calculate_array[i - 1]);
+                number_array[1] = parseFloat(calculate_array[i + 1]);
+                calculate();
+                calculate_array[i - 1] = answer;
+                calculate_array.splice(i, 2);
+                number_array[0]='';
+                number_array[1]='';
+                i = 0;
+
+            }
+            $('#inputdisplay').val(calculate_array[0])
+
+            
+        }
     }
 
+
+        // switch (operator) {
+        //     case '+':
+
+        //         //the last thing I pressed was =
+        //         if (did_calculate) {
+        //             //second value is empty
+        //             if (calculate_array[0] == '') {
+        //                 //default double the first value
+        //                 calculate_array[1] = calculate_array[0];
+        //             } else {
+        //                 //set first index to total of both values
+        //                 calculate_array[0] = parseFloat(calculate_array[0]) + parseFloat(calculate_array[1]);
+        //             }
+        //         } else {
+        //             //last thing I pressed wasnt =
+        //             if (calculate_array[1] == '') {
+        //                 calculate_array[1] = number_array[0];
+        //             }
+        //         }
+
+        //         calculate();
+
+        //         break;
+
+
+    //         case '-':
+    //             //the last thing I pressed was =
+    //             if (did_calculate) {
+    //                 //second value is empty
+    //                 if (number_array[1] == '') {
+    //                     //default double the first value
+    //                     number_array[1] = number_array[0];
+    //                 } else {
+    //                     //set first index to total of both values
+    //                     number_array[0] = parseFloat(number_array[0]) - parseFloat(number_array[1]);
+    //                 }
+    //             } else {
+    //                 //last thing I pressed wasnt =
+    //                 if (number_array[1] == '') {
+    //                     number_array[1] = number_array[0];
+    //                 }
+    //             }
+
+    //             calculate();
+    //             break;
+    //         case '*':
+    //             //the last thing I pressed was =
+    //             if (did_calculate) {
+    //                 //second value is empty
+    //                 if (number_array[1] == '') {
+    //                     //default double the first value
+    //                     number_array[1] = number_array[0];
+    //                 } else {
+    //                     //set first index to total of both values
+    //                     number_array[0] = parseFloat(number_array[0]) * parseFloat(number_array[1]);
+    //                 }
+    //             } else {
+    //                 //last thing I pressed wasnt =
+    //                 if (number_array[1] == '') {
+    //                     number_array[1] = number_array[0];
+    //                 }
+    //             }
+    //             calculate();
+    //             break;
+    //         case '/':
+    //             //the last thing I pressed was =
+    //             if (did_calculate) {
+    //                 //second value is empty
+    //                 if (number_array[1] == '') {
+    //                     //default double the first value
+    //                     number_array[1] = number_array[0];
+    //                 } else {
+    //                     //set first index to total of both values
+    //                     number_array[0] = parseFloat(number_array[0]) / parseFloat(number_array[1]);
+    //                 }
+    //             } else {
+    //                 //last thing I pressed wasnt =
+    //                 if (number_array[1] == '') {
+    //                     number_array[1] = number_array[0];
+    //                 }
+    //             }
+    //             calculate();
+    //             break;
+    //         default:
+    //     }
+    //     $("#inputdisplay").val(answer);
+
+    //}
+
     function calculate() {
-        if (number_array[0] == '' && number_array[1] == '') {
+        if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
 
-        var x = parseFloat(number_array[0]);
-        var y = parseFloat(number_array[1]);
-        if (isNaN(x)) {
-            x = 0;
-        }
-        if (isNaN(y)) {
-            y = 0;
-        }
-        console.log(typeof x, typeof y)
         switch (operator) {
             case '+':
-                answer = x + y;
+                answer = number_array[0] + number_array[1];
                 break;
 
 
             case '-':
-                answer = x - y;
+                answer = number_array[0] - number_array[1];
                 break;
             case '*':
-                answer = x * y;
+                answer = number_array[0] * number_array[1];
                 break;
             case '/':
-                answer = x / y;
+               answer = number_array[0] / number_array[1];
                 break;
             default:
         }
@@ -287,8 +275,7 @@
         if (typeof clear_display == 'undefined') {
             clear_display = false;
         }
-        number_array[0] = '';
-        number_array[1] = '';
+        calculate_array = ['', ''];
         number_index = 0;
         decimal_clicked = false;
         answer = 0;
