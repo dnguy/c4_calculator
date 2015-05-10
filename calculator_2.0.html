@@ -8,15 +8,13 @@
     <script>
     var number_array = ['', ''];
     var calculate_array = ['',''];
-    numberString = '';
     var number_index = 0;
-    var temp_num = '';
     var operator = '';
     var decimal_clicked = false;
-    var multi_number = '';
     var answer = 0;
     var did_calculate = false;
     var number_clicked=false;
+    calculation_done=false;
 
     function input_digit(typed_number) {
         if (did_calculate) {
@@ -58,6 +56,7 @@
         if(number_clicked == false){
             return;
         }
+
         operator = '+';
         operator_pressed();
     }
@@ -100,7 +99,7 @@
     }
 
     function equalPressed() {
-        if(calculate_array[0] == ''){
+        if(calculate_array[0] == '') {
             return;
         }
         for (var i = 0; i < calculate_array.length; i++) {
@@ -120,13 +119,15 @@
                     $('#inputdisplay').val('error')
                     return;
                 }
+                if(calculate_array.length == 3 && calculate_array[2] == ''){
+                    calculate_array[2]=calculate_array[0];
+                }
                 number_array[1] = parseFloat(calculate_array[i + 1]);
                 calculate();
                 calculate_array[i - 1] = answer;
                 console.log(answer);
                 calculate_array.splice(i, 2);
                 i = 0;
-            
             
             }  
         }
@@ -147,6 +148,9 @@
                     $('#inputdisplay').val('error')
                     return;
                 }
+                if(calculate_array.length == 3 && calculate_array[2] == ''){
+                    calculate_array[2]=calculate_array[0];
+                }
                 number_array[1] = parseFloat(calculate_array[i + 1]);
                 calculate();
                 calculate_array[i - 1] = answer;
@@ -161,6 +165,11 @@
         }
         result = calculate_array[0];
         $('#inputdisplay').val($('#inputdisplay').val() + ' ' + '=' + ' ' +result)
+         number_index = 0;
+        calculate_array[0]= '' + calculate_array[0];
+        number_clicked= true;
+        //calculation_done = true;
+
 
     }
 
@@ -169,29 +178,30 @@
         // switch (operator) {
         //     case '+':
 
-        //         //the last thing I pressed was =
-        //         if (did_calculate) {
-        //             //second value is empty
-        //             if (calculate_array[0] == '') {
-        //                 //default double the first value
-        //                 calculate_array[1] = calculate_array[0];
-        //             } else {
-        //                 //set first index to total of both values
-        //                 calculate_array[0] = parseFloat(calculate_array[0]) + parseFloat(calculate_array[1]);
-        //             }
-        //         } else {
-        //             //last thing I pressed wasnt =
-        //             if (calculate_array[1] == '') {
-        //                 calculate_array[1] = number_array[0];
-        //             }
-        //         }
 
-        //         calculate();
+    //             //the last thing I pressed was =
+    //             if (did_calculate) {
+    //                 //second value is empty
+    //                 if (calculate_array[1] == '') {
+    //                     //default double the first value
+    //                     calculate_array[1] = calculate_array[0];
+    //                 } else {
+    //                     //set first index to total of both values
+    //                     calculate_array[0] = parseFloat(calculate_array[0]) + parseFloat(calculate_array[1]);
+    //                 }
+    //             } else {
+    //                 //last thing I pressed wasnt =
+    //                 if (calculate_array[1] == '') {
+    //                     calculate_array[1] = number_array[0];
+    //                 }
+    //             }
 
-        //         break;
+    //             calculate();
+
+    //             break;
 
 
-    //         case '-':
+    // //         case '-':
     //             //the last thing I pressed was =
     //             if (did_calculate) {
     //                 //second value is empty
