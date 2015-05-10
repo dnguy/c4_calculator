@@ -16,17 +16,17 @@
     var multi_number = '';
     var answer = 0;
     var did_calculate = false;
-    var operator_clicked=false;
+    var number_clicked=false;
 
     function input_digit(typed_number) {
         if (did_calculate) {
             clear_data();
             did_calculate = false;
         }
-        //numberString = numberString + typed_number;
         calculate_array[number_index] = calculate_array[number_index] + typed_number;
         update_display();
         console.log("calculate_array : ", calculate_array);
+        number_clicked = true;
 
     }
     function update_display(){
@@ -36,78 +36,90 @@
     function decimal(typed_number) {
         if (decimal_clicked == false) {
             calculate_array[number_index] = calculate_array[number_index] + typed_number;
-            $("#inputdisplay").val(calculate_array[number_index]);
+            update_display();
             decimal_clicked = true;
         }
+    }
+    function operator_pressed() {
+        number_index += 1;
+        calculate_array[number_index] = operator;
+        number_index += 1;
+        calculate_array[number_index] = '';
+        decimal_clicked = false;
+        did_calculate = false;
+        update_display();
+        number_clicked = false;
     }
 
     function addition() {
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
+        if(number_clicked == false){
+            return;
+        }
         operator = '+';
-        number_index += 1;
-        calculate_array[number_index] = operator;
-        number_index += 1;
-        calculate_array[number_index] = '';
-        decimal_clicked = false;
-        did_calculate = false;
-        update_display();
-
-
+        operator_pressed();
     }
 
     function subtraction() {
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
+        if(number_clicked == false){
+            return;
+        }
     
        operator = '-';
-        number_index += 1;
-        calculate_array[number_index] = operator;
-        number_index += 1;
-        calculate_array[number_index] = '';
-        decimal_clicked = false;
-        did_calculate = false;
-        update_display();
+       operator_pressed();
     }
 
     function multiply() {
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
+        if(number_clicked == false){
+            return;
+        }
 
         operator = '*';
-        number_index += 1;
-        calculate_array[number_index] = operator;
-        number_index += 1;
-        calculate_array[number_index] = '';
-        decimal_clicked = false;
-        did_calculate = false;
-        update_display();
+        operator_pressed();
+
     }
 
     function divide() {
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
+        if(number_clicked == false){
+            return;
+        }
 
         operator = '/';
-        number_index += 1;
-        calculate_array[number_index] = operator;
-        number_index += 1;
-        calculate_array[number_index] = '';
-        decimal_clicked = false;
-        did_calculate = false;
-        update_display();
+        operator_pressed();
     }
 
     function equalPressed() {
+        if(calculate_array[0] == ''){
+            return;
+        }
         for (var i = 0; i < calculate_array.length; i++) {
             if (calculate_array[i] == '*' || calculate_array[i] == '/') {
                 
                 operator = calculate_array[i];
+                if(isNaN(calculate_array[calculate_array.length - 1])){
+                     $('#inputdisplay').val('error')
+                    return;
+                }
+                if(isNaN(calculate_array[i-1])){
+                    $('#inputdisplay').val('error')
+                    return;
+                }
                 number_array[0] = parseFloat(calculate_array[i - 1]);
+                if(isNaN(calculate_array[i+1])){
+                    $('#inputdisplay').val('error')
+                    return;
+                }
                 number_array[1] = parseFloat(calculate_array[i + 1]);
                 calculate();
                 calculate_array[i - 1] = answer;
@@ -115,13 +127,26 @@
                 calculate_array.splice(i, 2);
                 i = 0;
             
+            
             }  
         }
             for (var i = 0; i < calculate_array.length; i++) {
                 if (calculate_array[i] == '+' || calculate_array[i] == '-') {
 
-                operator = calculate_array[i];
+               operator = calculate_array[i];
+                if(isNaN(calculate_array[calculate_array.length - 1])){
+                     $('#inputdisplay').val('error')
+                    return;
+                }
+                if(isNaN(calculate_array[i-1])){
+                    $('#inputdisplay').val('error')
+                    return;
+                }
                 number_array[0] = parseFloat(calculate_array[i - 1]);
+                if(isNaN(calculate_array[i+1])){
+                    $('#inputdisplay').val('error')
+                    return;
+                }
                 number_array[1] = parseFloat(calculate_array[i + 1]);
                 calculate();
                 calculate_array[i - 1] = answer;
@@ -131,11 +156,14 @@
                 i = 0;
 
             }
-            $('#inputdisplay').val(calculate_array[0])
-
+            
             
         }
+        result = calculate_array[0];
+        $('#inputdisplay').val($('#inputdisplay').val() + ' ' + '=' + ' ' +result)
+
     }
+
 
 
         // switch (operator) {
