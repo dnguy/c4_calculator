@@ -7,14 +7,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script>
     var number_array = ['', ''];
-    var calculate_array = ['',''];
+    var calculate_array = ['', ''];
     var number_index = 0;
     var operator = '';
     var decimal_clicked = false;
     var answer = 0;
     var did_calculate = false;
-    var number_clicked=false;
-    calculation_done=false;
+    var number_clicked = false;
+    calculation_done = false;
 
     function input_digit(typed_number) {
         if (did_calculate) {
@@ -27,7 +27,8 @@
         number_clicked = true;
 
     }
-    function update_display(){
+
+    function update_display() {
         $("#inputdisplay").val(calculate_array.join(''));
     }
 
@@ -38,6 +39,7 @@
             decimal_clicked = true;
         }
     }
+
     function operator_pressed() {
         number_index += 1;
         calculate_array[number_index] = operator;
@@ -53,7 +55,7 @@
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
-        if(number_clicked == false){
+        if (number_clicked == false) {
             return;
         }
 
@@ -65,19 +67,19 @@
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
-        if(number_clicked == false){
+        if (number_clicked == false) {
             return;
         }
-    
-       operator = '-';
-       operator_pressed();
+
+        operator = '-';
+        operator_pressed();
     }
 
     function multiply() {
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
-        if(number_clicked == false){
+        if (number_clicked == false) {
             return;
         }
 
@@ -90,7 +92,7 @@
         if (calculate_array[0] == '' && calculate_array[1] == '') {
             return;
         }
-        if(number_clicked == false){
+        if (number_clicked == false) {
             return;
         }
 
@@ -99,171 +101,80 @@
     }
 
     function equalPressed() {
-        if(calculate_array[0] == '') {
+        if (calculate_array[0] == '') {
             return;
         }
         for (var i = 0; i < calculate_array.length; i++) {
             if (calculate_array[i] == '*' || calculate_array[i] == '/') {
-                
+
                 operator = calculate_array[i];
-                if(isNaN(calculate_array[calculate_array.length - 1])){
-                     $('#inputdisplay').val('error')
+                if (isNaN(calculate_array[calculate_array.length - 1])) {
+                    $('#inputdisplay').val('error')
                     return;
                 }
-                if(isNaN(calculate_array[i-1])){
+                if (isNaN(calculate_array[i - 1])) {
                     $('#inputdisplay').val('error')
                     return;
                 }
                 number_array[0] = parseFloat(calculate_array[i - 1]);
-                if(isNaN(calculate_array[i+1])){
+                if (isNaN(calculate_array[i + 1])) {
                     $('#inputdisplay').val('error')
                     return;
                 }
-                if(calculate_array.length == 3 && calculate_array[2] == ''){
-                    calculate_array[2]=calculate_array[0];
+                if (calculate_array.length == 3 && calculate_array[2] == '') {
+                    calculate_array[2] = calculate_array[0];
                 }
                 number_array[1] = parseFloat(calculate_array[i + 1]);
+                if(operator == '/' && number_array[1] == 0){
+                    $('#inputdisplay').val('error: cannot divide by 0')
+                }
                 calculate();
                 calculate_array[i - 1] = answer;
                 console.log(answer);
                 calculate_array.splice(i, 2);
                 i = 0;
-            
-            }  
-        }
-            for (var i = 0; i < calculate_array.length; i++) {
-                if (calculate_array[i] == '+' || calculate_array[i] == '-') {
 
-               operator = calculate_array[i];
-                if(isNaN(calculate_array[calculate_array.length - 1])){
-                     $('#inputdisplay').val('error')
+            }
+        }
+        for (var i = 0; i < calculate_array.length; i++) {
+            if (calculate_array[i] == '+' || calculate_array[i] == '-') {
+
+                operator = calculate_array[i];
+                if (isNaN(calculate_array[calculate_array.length - 1])) {
+                    $('#inputdisplay').val('error')
                     return;
                 }
-                if(isNaN(calculate_array[i-1])){
+                if (isNaN(calculate_array[i - 1])) {
                     $('#inputdisplay').val('error')
                     return;
                 }
                 number_array[0] = parseFloat(calculate_array[i - 1]);
-                if(isNaN(calculate_array[i+1])){
+                if (isNaN(calculate_array[i + 1])) {
                     $('#inputdisplay').val('error')
                     return;
                 }
-                if(calculate_array.length == 3 && calculate_array[2] == ''){
-                    calculate_array[2]=calculate_array[0];
+                if (calculate_array.length == 3 && calculate_array[2] == '') {
+                    calculate_array[2] = calculate_array[0];
                 }
                 number_array[1] = parseFloat(calculate_array[i + 1]);
                 calculate();
                 calculate_array[i - 1] = answer;
                 calculate_array.splice(i, 2);
-                number_array[0]='';
-                number_array[1]='';
+                number_array[0] = '';
+                number_array[1] = '';
                 i = 0;
 
             }
-            
-            
+
+
         }
         result = calculate_array[0];
-        $('#inputdisplay').val($('#inputdisplay').val() + ' ' + '=' + ' ' +result)
-         number_index = 0;
-        calculate_array[0]= '' + calculate_array[0];
-        number_clicked= true;
-        //calculation_done = true;
-
+        $('#inputdisplay').val($('#inputdisplay').val() + ' ' + '=' + ' ' + result)
+        number_index = 0;
+        calculate_array[0] = '' + calculate_array[0];
+        number_clicked = true;
 
     }
-
-
-
-        // switch (operator) {
-        //     case '+':
-
-
-    //             //the last thing I pressed was =
-    //             if (did_calculate) {
-    //                 //second value is empty
-    //                 if (calculate_array[1] == '') {
-    //                     //default double the first value
-    //                     calculate_array[1] = calculate_array[0];
-    //                 } else {
-    //                     //set first index to total of both values
-    //                     calculate_array[0] = parseFloat(calculate_array[0]) + parseFloat(calculate_array[1]);
-    //                 }
-    //             } else {
-    //                 //last thing I pressed wasnt =
-    //                 if (calculate_array[1] == '') {
-    //                     calculate_array[1] = number_array[0];
-    //                 }
-    //             }
-
-    //             calculate();
-
-    //             break;
-
-
-    // //         case '-':
-    //             //the last thing I pressed was =
-    //             if (did_calculate) {
-    //                 //second value is empty
-    //                 if (number_array[1] == '') {
-    //                     //default double the first value
-    //                     number_array[1] = number_array[0];
-    //                 } else {
-    //                     //set first index to total of both values
-    //                     number_array[0] = parseFloat(number_array[0]) - parseFloat(number_array[1]);
-    //                 }
-    //             } else {
-    //                 //last thing I pressed wasnt =
-    //                 if (number_array[1] == '') {
-    //                     number_array[1] = number_array[0];
-    //                 }
-    //             }
-
-    //             calculate();
-    //             break;
-    //         case '*':
-    //             //the last thing I pressed was =
-    //             if (did_calculate) {
-    //                 //second value is empty
-    //                 if (number_array[1] == '') {
-    //                     //default double the first value
-    //                     number_array[1] = number_array[0];
-    //                 } else {
-    //                     //set first index to total of both values
-    //                     number_array[0] = parseFloat(number_array[0]) * parseFloat(number_array[1]);
-    //                 }
-    //             } else {
-    //                 //last thing I pressed wasnt =
-    //                 if (number_array[1] == '') {
-    //                     number_array[1] = number_array[0];
-    //                 }
-    //             }
-    //             calculate();
-    //             break;
-    //         case '/':
-    //             //the last thing I pressed was =
-    //             if (did_calculate) {
-    //                 //second value is empty
-    //                 if (number_array[1] == '') {
-    //                     //default double the first value
-    //                     number_array[1] = number_array[0];
-    //                 } else {
-    //                     //set first index to total of both values
-    //                     number_array[0] = parseFloat(number_array[0]) / parseFloat(number_array[1]);
-    //                 }
-    //             } else {
-    //                 //last thing I pressed wasnt =
-    //                 if (number_array[1] == '') {
-    //                     number_array[1] = number_array[0];
-    //                 }
-    //             }
-    //             calculate();
-    //             break;
-    //         default:
-    //     }
-    //     $("#inputdisplay").val(answer);
-
-    //}
 
     function calculate() {
         if (calculate_array[0] == '' && calculate_array[1] == '') {
@@ -283,7 +194,7 @@
                 answer = number_array[0] * number_array[1];
                 break;
             case '/':
-               answer = number_array[0] / number_array[1];
+                answer = number_array[0] / number_array[1];
                 break;
             default:
         }
@@ -298,12 +209,15 @@
 
 
     function clear_array() {
-        if (number_index == 0) {
-            number_array[0] = '';
-            $("#inputdisplay").val(number_array[0]);
-        } else if (number_index == 1) {
-            number_array[1] = '';
-            $("#inputdisplay").val(number_array[1]);
+        if (calculate_array[number_index] == '') {
+            calculate_array.splice(number_index - 1, 2)
+            number_index = calculate_array.length - 1;
+            number_clicked = true;
+            update_display();
+        } else {
+            calculate_array.pop();
+            calculate_array.push('');
+            update_display();
         }
 
     }
@@ -331,24 +245,23 @@
         <button type="button" onclick="input_digit(1)">1</button>
         <button type="button" onclick="input_digit(2)">2</button>
         <button type="button" onclick="input_digit(3)">3</button>
-        <button type="button" onclick="addition()">+</button>
+        <button class="operator" type="button" onclick="addition()">+</button>
         <br>
         <button type="button" onclick="input_digit(4)">4</button>
         <button type="button" onclick="input_digit(5)">5</button>
         <button type="button" onclick="input_digit(6)">6</button>
-        <button type="button" onclick="subtraction()">-</button>
+        <button class="operator" type="button" onclick="subtraction()">-</button>
         <br>
         <button type="button" onclick="input_digit(7)">7</button>
         <button type="button" onclick="input_digit(8)">8</button>
         <button type="button" onclick="input_digit(9)">9</button>
-        <button type="button" onclick="multiply()">*</button>
+        <button class="operator" type="button" onclick="multiply()">*</button>
         <br>
         <button type="button" onclick="input_digit(0)">0</button>
-        <button type="button" onclick="equalPressed()">=</button>
         <button type="button" onclick="decimal('.')">.</button>
-        <button type="button" onclick="divide()">/</button>
+        <button class="operator" type="button" onclick="equalPressed()">=</button>
+        <button class="operator" type="button" onclick="divide()">/</button>
         <br>
-        <button type="button" onclick="sign_inversion()">+/-</button>
         <button type="button" onclick="clear_data(true)">AC</button>
         <button type="button" onclick="clear_array()">Clear</button>
     </div>

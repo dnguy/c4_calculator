@@ -5,6 +5,8 @@ input#inputdisplay {
   font-size: 25px;
   box-shadow: 1px 3px 3px black;
   border-radius: 10px;
+    background: black;
+  color: rgb(17, 255, 38);
 }
 button {
   width: 60px;
@@ -24,4 +26,7 @@ div {
 	border: 6px solid black;
 	background:rgb(0, 230, 255);
   border-radius: 10px;
+}
+.operator{
+  background: white;
 }
