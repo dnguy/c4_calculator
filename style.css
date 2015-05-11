@@ -7,6 +7,7 @@ input#inputdisplay {
   border-radius: 10px;
     background: black;
   color: rgb(17, 255, 38);
+  text-align: right;
 }
 button {
   width: 60px;
