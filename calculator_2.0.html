@@ -14,7 +14,7 @@
     var answer = 0;
     var did_calculate = false;
     var number_clicked = false;
-    calculation_done = false;
+    var calculation_done = false;
 
     function input_digit(typed_number) {
         if (did_calculate) {
@@ -25,6 +25,7 @@
         update_display();
         console.log("calculate_array : ", calculate_array);
         number_clicked = true;
+        calculation_done=true;
 
     }
 
@@ -49,6 +50,7 @@
         did_calculate = false;
         update_display();
         number_clicked = false;
+        calculation_done = true;
     }
 
     function addition() {
@@ -104,26 +106,22 @@
         if (calculate_array[0] == '') {
             return;
         }
+        if(calculation_done == false){
+            return;
+        }
         for (var i = 0; i < calculate_array.length; i++) {
             if (calculate_array[i] == '*' || calculate_array[i] == '/') {
 
-                operator = calculate_array[i];
-                if (isNaN(calculate_array[calculate_array.length - 1])) {
-                    $('#inputdisplay').val('error')
-                    return;
-                }
-                if (isNaN(calculate_array[i - 1])) {
-                    $('#inputdisplay').val('error')
-                    return;
-                }
-                number_array[0] = parseFloat(calculate_array[i - 1]);
-                if (isNaN(calculate_array[i + 1])) {
-                    $('#inputdisplay').val('error')
-                    return;
-                }
                 if (calculate_array.length == 3 && calculate_array[2] == '') {
                     calculate_array[2] = calculate_array[0];
                 }
+                else if (calculate_array[number_index] == '') {
+                    calculate_array.splice(number_index - 1, 2);
+                    update_display();
+                }
+
+                operator = calculate_array[i];
+                number_array[0] = parseFloat(calculate_array[i - 1]);
                 number_array[1] = parseFloat(calculate_array[i + 1]);
                 if(operator == '/' && number_array[1] == 0){
                     $('#inputdisplay').val('error: cannot divide by 0')
@@ -139,23 +137,16 @@
         for (var i = 0; i < calculate_array.length; i++) {
             if (calculate_array[i] == '+' || calculate_array[i] == '-') {
 
-                operator = calculate_array[i];
-                if (isNaN(calculate_array[calculate_array.length - 1])) {
-                    $('#inputdisplay').val('error')
-                    return;
-                }
-                if (isNaN(calculate_array[i - 1])) {
-                    $('#inputdisplay').val('error')
-                    return;
-                }
-                number_array[0] = parseFloat(calculate_array[i - 1]);
-                if (isNaN(calculate_array[i + 1])) {
-                    $('#inputdisplay').val('error')
-                    return;
-                }
                 if (calculate_array.length == 3 && calculate_array[2] == '') {
                     calculate_array[2] = calculate_array[0];
                 }
+                if (calculate_array[number_index] == '') {
+                    calculate_array.splice(number_index - 1, 2);
+                    update_display();
+                }
+    
+                operator = calculate_array[i];
+                number_array[0] = parseFloat(calculate_array[i - 1]);
                 number_array[1] = parseFloat(calculate_array[i + 1]);
                 calculate();
                 calculate_array[i - 1] = answer;
@@ -168,12 +159,13 @@
 
 
         }
+
         result = calculate_array[0];
         $('#inputdisplay').val($('#inputdisplay').val() + ' ' + '=' + ' ' + result)
         number_index = 0;
         calculate_array[0] = '' + calculate_array[0];
         number_clicked = true;
-
+        calculation_done = false;
     }
 
     function calculate() {
@@ -218,6 +210,7 @@
             calculate_array.pop();
             calculate_array.push('');
             update_display();
+            decimal_clicked=false;
         }
 
     }
