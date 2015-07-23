@@ -35,6 +35,9 @@ div {
 	border: 6px solid black;
 	background:rgb(0, 230, 255);
   border-radius: 10px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .operator{
   background: white;
